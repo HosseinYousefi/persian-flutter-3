@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pf/main.dart';
 
 class MyAppBar extends AppBar {
   MyAppBar({
@@ -9,17 +11,23 @@ class MyAppBar extends AppBar {
         );
 }
 
-class BrightnessButton extends StatelessWidget {
+class BrightnessButton extends HookConsumerWidget {
   const BrightnessButton();
 
   @override
-  Widget build(BuildContext context) {
-    final brightness = Brightness.dark;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final brightness = ref.watch(brightnessProvider);
     return IconButton(
       icon: Icon(
-        brightness == Brightness.dark ? Icons.dark_mode : Icons.light_mode,
+        brightness.state == Brightness.light
+            ? Icons.dark_mode
+            : Icons.light_mode,
       ),
-      onPressed: () {},
+      onPressed: () {
+        brightness.state = brightness.state == Brightness.light
+            ? Brightness.dark
+            : Brightness.light;
+      },
     );
   }
 }

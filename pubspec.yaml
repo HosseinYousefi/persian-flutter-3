@@ -11,17 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.0
-  freezed_annotation: ^0.14.3
+  freezed_annotation: ^0.14.0
   hooks_riverpod: ^1.0.0-dev.6
 
   cupertino_icons: ^1.0.2
 
-dependency_overrides:
-  # needed for now: https://github.com/rrousselGit/freezed/issues/485
-  meta: ^1.3.0
-
 dev_dependencies:
-  freezed: ^0.14.4
+  freezed: ^0.14.0
   build_runner:
   flutter_test:
     sdk: flutter

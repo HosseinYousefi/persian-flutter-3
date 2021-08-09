@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pf/state_notifiers/auth_state_notifier.dart';
 import 'package:pf/widgets/my_app_bar.dart';
 
 const _verticalPadding = SizedBox(height: 20);
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isObscure = useState(true);
+    final authStateNotifier = ref.watch(authStateNotifierProvider.notifier);
     return Scaffold(
       appBar: MyAppBar(),
       body: SafeArea(
@@ -25,16 +30,27 @@ class LoginPage extends StatelessWidget {
               TextField(
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.remove_red_eye_outlined),
-                    onPressed: () {},
+                    icon: Icon(
+                      isObscure.value
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.remove_red_eye,
+                    ),
+                    onPressed: () {
+                      isObscure.value = !isObscure.value;
+                    },
                   ),
                   hintText: 'Password',
                 ),
-                obscureText: true,
+                obscureText: isObscure.value,
               ),
               _verticalPadding,
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  authStateNotifier.login(
+                    username: 'hossein',
+                    password: '1234',
+                  );
+                },
                 child: Text('Login'),
               ),
               const Spacer(),
